@@ -9,12 +9,13 @@ application = Flask(__name__)
 application.debug = True
 @application.route('/', methods=['GET'])
 def hello():
- return '<p>Hello world</p>'
-url = "https://www.georges.com.au/sony-a7r-mark-iv-body.html"
+    message = 'Hello my Dear, please find the price of my Xmas Gift below '
+    return message + parsePrice("https://www.georges.com.au/sony-a7r-mark-iv-body.html")
+
 def parsePrice(url):
     if len(url) != 0:
         r = requests.get(url)
-        soup = bs4.BeautifulSoup(r.text,"lxml")
+        soup = bs4.BeautifulSoup(r.text,"html")
         price = soup.find_all('span',{'class':'price'})[0].text
         return price
     else:
