@@ -8,6 +8,7 @@ from file_handling import get_url
 def main():
     product_dic = get_url()
     price_dic={}
+    html = ''
 
     for product in product_dic.values():
         product_name = product[0]
@@ -26,8 +27,11 @@ def main():
                 parser = parseCameraProPrice(product[4])
                 price_list.append([parser.company, parser.parsePrice()])
         price_dic[product_name] = price_list
-        
-    return(price_dic)
+    
+    for x,y in price_dic.items():
+        html += '<h2>Product: ' + x + ' :' + '</br>'
+        html += '<h3>' + str(y[0]) + str(y[1]) + str(y[2]) + str(y[3])
+    return html
 
 #record the price_dic 
 # record_price(price_dic)
