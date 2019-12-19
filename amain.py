@@ -4,11 +4,14 @@ from teds import parseTedsPrice
 from camerapro import parseCameraProPrice
 from file_handling import record_price
 from file_handling import get_url
+# from apscheduler.schedulers.blocking import BlockingScheduler
+
+# sched = BlockingScheduler()
+price_dic={}
+
 
 def main():
     product_dic = get_url()
-    price_dic={}
-    html = ''
 
     for product in product_dic.values():
         product_name = product[0]
@@ -28,9 +31,16 @@ def main():
                 price_list.append([parser.company, parser.parsePrice()])
         price_dic[product_name] = price_list
     
+    return price_dic
+
+
+def display_price():
+    html = ''
+
     for x,y in price_dic.items():
         html += '<h2>Product: ' + x + ' :' + '</br>'
         html += '<h3>' + str(y[0]) + str(y[1]) + str(y[2]) + str(y[3])
+    
     return html
 
 #record the price_dic 

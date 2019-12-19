@@ -2,27 +2,23 @@ from flask import Flask
 import bs4
 import requests
 from bs4 import BeautifulSoup
-from amain import main
+from amain import display_price, main
 # Flask is a web framework. 
 # It extends the capabilities of Python to allow you to create a website.
 
+# from apscheduler.schedulers.blocking import BlockingScheduler
+# sched = BlockingScheduler()
+
 application = Flask(__name__)
 application.debug = True
+
+# @sched.scheduled_job('interval', seconds=10)
 @application.route('/', methods=['GET'])
 def hello():
-    message = 'Hello my Dear, please find the price of my Xmas Gift below '
-    print(message)
-    return main()
-
-
-# def parsePrice(url):
-#     if len(url) != 0:
-#         r = requests.get(url)
-#         soup = bs4.BeautifulSoup(r.text,"html")
-#         price = soup.find_all('span',{'class':'price'})[0].text
-#         return price
-#     else:
-#         return 0
+    # message = 'Hello my Dear, please find the price of my Xmas Gift below '
+    # print(message)
+    main()
+    return display_price()
 
 if __name__ == "__main__":
  application.run()
