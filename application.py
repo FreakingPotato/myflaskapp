@@ -4,7 +4,7 @@ from flask_apscheduler import APScheduler
 import bs4
 import requests
 from bs4 import BeautifulSoup
-from amain import read_csv
+from amain import camera_price_bot
 
 import datetime
 # Flask is a web framework. 
@@ -18,7 +18,7 @@ application.debug = True
 # @sched.scheduled_job('interval', seconds=10)
 @application.route('/', methods=['GET'])
 def hello():
-    return read_csv()
+    return camera_price_bot()
 
 
 def current_time(text):

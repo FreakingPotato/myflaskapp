@@ -1,10 +1,14 @@
 import scrapper
 import datetime
 import csv
+from file_handling import record_price
+import file_handling as fh
+import time
 
 price_dic={}
 
-def display_price():
+#transfer the data in csv to html
+def display_price_csv():
     html = ''
     price_dic = scrapper.scrap()
     for x,y in price_dic.items():
@@ -13,12 +17,13 @@ def display_price():
     
     return html
 
-def read_csv():
+#transfer the data in csv to html
+def read_cheapest_price_csv():
     html = ''
     try:
         with open('cheapest_price_data.csv', 'r') as csv_file:
                     csv_reader = csv.reader(csv_file)
-
+                    #present the data in table <table></table>
                     html += '<table style="width:100%">'
 
                     first_row = csv_reader.__next__()
@@ -40,9 +45,7 @@ def read_csv():
                     html += '</tr>'
 
                     html += '</table>'
-        
         return html
-
     except IOError:
         print("File not accessible")
 
@@ -51,8 +54,7 @@ def read_csv():
 # record_price(price_dic)
 
 #find the cheapest price
-def cheapest_price():
-    price_dic = scrapper.scrap()
+def cheapest_price(price_dic):
     cheapest_dic = {}
 
     cheapest_dic['date'] = ['date',str(datetime.date.today())]
@@ -73,4 +75,11 @@ def cheapest_price():
     
     return cheapest_dic
     
-# print(cheapest_dic)
+def camera_price_bot():
+    while True:
+        pd = scrapper.scrap()
+        record_price(pd)
+        cheapest_pd = cheapest_price(pd)
+        fh.record_cheapest_price(cheapest_pd)
+        fh.record_everyday_cheapest_price(cheapest_pd)
+        return read_cheapest_price_csv()
